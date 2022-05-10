@@ -16,9 +16,7 @@ public class Inicio {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        int option = 0;
-
-        option = scanner.nextInt();
+        var option = 0;
         do {
             System.out.println("------------------------");
             System.out.println("Aplicacion de mensajes");
@@ -29,17 +27,24 @@ public class Inicio {
             System.out.println(" 5. Salir");
             // leemos la opcion del usuario
 
+            option = scanner.nextInt();
+
             switch (option) {
-                case 1 ->
+                case 1:
                     MensajesService.crearMensaje();
-                case 2 ->
+                    break;
+                case 2:
                     MensajesService.listarMensajes();
-                case 3 ->
+                    break;
+                case 3:
                     MensajesService.borrarMensaje();
-                case 4 ->
+                    break;
+                case 4:
                     MensajesService.editarMensaje();
-                default -> {
-                }
+                    break;
+                default:
+                    break;
+
             }
 
         } while (option != 5);
