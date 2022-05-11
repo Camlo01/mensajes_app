@@ -11,7 +11,7 @@ public class MensajesDAO {
     public static void crearMensajeDB(Mensajes mensaje) {
         Conexion db_connect = new Conexion();
 
-        try ( Connection conexion = db_connect.get_connection()) {
+        try (Connection conexion = db_connect.get_connection()) {
             PreparedStatement ps = null;
             try {
                 String query = "INSERT INTO `mensajes` (`mensaje`, `autor_mensaje`) VALUES (?,?)";
@@ -34,7 +34,7 @@ public class MensajesDAO {
         PreparedStatement ps = null;
         ResultSet rs = null;
 
-        try ( Connection conexion = db_connect.get_connection()) {
+        try (Connection conexion = db_connect.get_connection()) {
             String query = "SELECT * FROM `mensajes`";
             ps = conexion.prepareStatement(query);
             rs = ps.executeQuery();
@@ -51,10 +51,30 @@ public class MensajesDAO {
         }
     }
 
+    public static void vistaRapidaMensajes() {
+        Conexion db_connect = new Conexion();
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        try (Connection conexion = db_connect.get_connection()) {
+            String query = "SELECT * FROM `mensajes`";
+            ps = conexion.prepareStatement(query);
+            rs = ps.executeQuery();
+            System.out.println("Vista previa mensajes-------");
+            while (rs.next()) {
+                int id = rs.getInt("id_mensaje");
+                String mensaje = rs.getString("Mensaje");
+                System.out.println("Id: " + id + " Mensaje: " + mensaje);
+            }
+        } catch (SQLException e) {
+            System.out.println("No se pudieron recuperar los mensajes");
+            System.out.println(e);
+        }
+    }
+
     public static void borrarMensajeDB(int id_mensaje) {
         Conexion db_connect = new Conexion();
 
-        try ( Connection conexion = db_connect.get_connection()) {
+        try (Connection conexion = db_connect.get_connection()) {
             PreparedStatement ps = null;
             try {
 
@@ -80,7 +100,7 @@ public class MensajesDAO {
     public static void actualizarMensajeDB(Mensajes mensaje) {
         Conexion db_connect = new Conexion();
 
-        try ( Connection conexion = db_connect.get_connection()) {
+        try (Connection conexion = db_connect.get_connection()) {
             PreparedStatement ps = null;
             try {
 
