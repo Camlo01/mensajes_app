@@ -25,6 +25,7 @@ public class MensajesDAO {
             }
         } catch (SQLException e) {
             System.out.println(e);
+            errorConnectToDataBase();
         }
     }
 
@@ -70,11 +71,41 @@ public class MensajesDAO {
 
         } catch (SQLException e) {
             System.out.println(e);
+            errorConnectToDataBase();
+
         }
 
     }
 
     public static void actualizarMensajeDB(Mensajes mensaje) {
+        Conexion db_connect = new Conexion();
+
+        try ( Connection conexion = db_connect.get_connection()) {
+            PreparedStatement ps = null;
+            try {
+
+                String query = "UPDATE `mensajes` SET `mensaje` = ? WHERE `mensajes`.`id_mensaje` =  ?";
+                ps = conexion.prepareStatement(query);
+                ps.setString(1, mensaje.getMensaje());
+                ps.setInt(2, mensaje.getId_mensaje());
+                ps.executeUpdate();
+                System.out.println("Se actualizó el mensaje correctamente");
+
+            } catch (SQLException e) {
+                System.out.println(e);
+                System.out.println("No se pudo actualizar el mensaje :(");
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            errorConnectToDataBase();
+
+        }
+
+    }
+
+    private static void errorConnectToDataBase() {
+        System.out.println("Problema al conectar con la base de datos");
     }
 
 }
